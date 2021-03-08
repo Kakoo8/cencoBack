@@ -13,7 +13,7 @@ volvemos a la carpeta raiz del proyecto
 Instalar Dependencias:
 
 ```
-(env)$ pip install -r requirements.txt
+(env)$ pip install -r requerimientos.txt
 ```
 
 
