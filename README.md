@@ -8,6 +8,7 @@ $ activate
 volvemos a la carpeta raiz del proyecto
 ```
 (env)$ cd ..
+(env)$ cd  djangoWeather
 
 ```
 Instalar Dependencias:
