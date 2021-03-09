@@ -7,7 +7,7 @@ urlpatterns = {
     path('<slug:key>', manage_item, name="single_item"),
     path('clima/London', get_byCity, name="byCity"),
     path('weather/<slug:key>', get_weather, name="weather"),
-    path('coord/cities', get_allCities, name="cities"),
+    #path('coord/cities', get_allCities, name="cities"),
     path('error', set_error, name="error")
 }
 urlpatterns = format_suffix_patterns(urlpatterns)

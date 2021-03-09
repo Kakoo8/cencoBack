@@ -5,8 +5,11 @@ from django.conf import settings
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-
+from time import time, sleep
+import random
+import datetime
 # Redis instance
+loaded=False
 redis = redis.StrictRedis(host=settings.REDIS_HOST,port=settings.REDIS_PORT, db=0)
 
 @api_view(['GET'])
@@ -44,7 +47,7 @@ def manage_item(request, *args, **kwargs):
                 return Response(response, status=404)
 
    
-@api_view(['POST'])
+@api_view(['GET','POST'])
 def set_error(request, *args, **kwargs):
     if request.method == 'POST':
         item = json.loads(request.body)
@@ -52,7 +55,7 @@ def set_error(request, *args, **kwargs):
         value = item[key]
         redis.set(key, value)
         response = {
-            'msg': "successfully setted"
+            'msg': "'How unfortunate! The API RequestFailed'"
          }
     return Response(response, 201)
 
@@ -77,7 +80,7 @@ def get_byCity(params):
 
 
 
-@api_view(['GET'])
+
 def get_allCities(params):
     cities={'London','Santiago','Zurich','Auckland','Sydney','Georgia'}
     for city in cities:
@@ -116,6 +119,7 @@ def generate_request(url, params={}):
 
 @api_view(['GET'])
 def get_weather(request, *args, **kwargs):
+    
     if kwargs['key']:
 
         lat = json.loads(redis.get(kwargs['key'] + 'Lat'))
@@ -123,17 +127,32 @@ def get_weather(request, *args, **kwargs):
         lon = json.loads(redis.get(kwargs['key'] + 'Lon'))
         
         url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=c373cc5c75cb95bd584db9668289be86"
+       
         
-        response = generate_request(url, args)
-        if response:
-            return Response(response, status=status.HTTP_200_OK)
-
-        return Response(url,status=status.HTTP_200_OK)
+        return Response(get_dataW(url, kwargs['key'], args), status=status.HTTP_200_OK)
 
 
+def get_dataW(url, city, args):
+        time=datetime.datetime.now()
+        if (random.uniform(0, 1) < 0.1):
+
+            redis.set(time.timestamp(), "error Consulting "+city)
+            get_dataW(url,city,args)
+            
+            
+        else:
+            redis.set(time.timestamp(), "error Consulting "+city)
+            response = generate_request(url, args)
+            if response:
+                return response
+    
 
     
 
-        
+if(loaded==False):
+    get_allCities("")
+    loaded=True
+
+      
         
 
