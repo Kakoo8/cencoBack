@@ -29,9 +29,9 @@ def get_weather():
 
         url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=c373cc5c75cb95bd584db9668289be86"
         data.append(get_dataW(url, city, params))
-
     
-    async_to_sync(channel_layer.group_send)( 'data',{'type':'receive','text':data})
+    
+    async_to_sync(channel_layer.group_send)( 'data',{'type':'receive','string':data})
     
 
 
