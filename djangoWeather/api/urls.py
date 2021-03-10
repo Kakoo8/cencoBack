@@ -5,12 +5,10 @@ from .views import *
 from django.urls import re_path
 
 urlpatterns = {
-    path('items', manage_items, name="items"),
-    path('<slug:key>', manage_item, name="single_item"),
-    path('clima/London', get_byCity, name="byCity"),
+   
     path('weather/cities', get_weather, name="weather"),
     path('coord/cities', get_allCities, name="cities"),
-    path('error', set_error, name="error")
+    
 }
 
 

@@ -20,6 +20,11 @@ Instalar Dependencias:
 
 Desplegamos la aplicacion
 ```
+(env)$ python manage.py makemigrations
+(env)$ python manage.py migrate
 (env)$ python manage.py runserver
 ```
-vamos a  `http://127.0.0.1:8000/api/`.
+En otro entorno virual nos dirigimos a la carpeta djangoWeather y activamos Celery
+```
+celery -A djangoWeather beat -l INFO
+```

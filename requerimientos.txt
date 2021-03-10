@@ -2,7 +2,7 @@
 djangorestframework
 #corseHeaders
 django-cors-headers
-#redis
+#Credis
 redis
 
 enum-compat==0.0.2
@@ -14,3 +14,4 @@ six==1.10.0
 
 channels
 schedule
+celery[redis]

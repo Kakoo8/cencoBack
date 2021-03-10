@@ -12,71 +12,7 @@ import datetime
 loaded=False
 redis = redis.StrictRedis(host=settings.REDIS_HOST,port=settings.REDIS_PORT, db=0)
 
-@api_view(['GET'])
-def manage_items(request, *args, **kwargs):
-    if request.method == 'GET':
-        items = {}
-        count = 0
-        for key in redis.keys("*"):
-            items[key.decode("utf-8")] = redis.get(key)
-            count += 1
-        response = {
-           'items': items
-        }
-        return Response(response, status=200)
-    
 
-@api_view(['GET'])
-def manage_item(request, *args, **kwargs):
-    if request.method == 'GET':
-        if kwargs['key']:
-            value = redis.get(kwargs['key'])
-            if value:
-                response = {
-                    'key': kwargs['key'],
-                    'value': value,
-                    'msg': 'success'
-                }
-                return Response(response, status=200)
-            else:
-                response = {
-                    'key': kwargs['key'],
-                    'value': None,
-                    'msg': 'Not found'
-                }
-                return Response(response, status=404)
-
-   
-@api_view(['GET','POST'])
-def set_error(request, *args, **kwargs):
-    if request.method == 'POST':
-        item = json.loads(request.body)
-        key = list(item.keys())[0]
-        value = item[key]
-        redis.set(key, value)
-        response = {
-            'msg': "'How unfortunate! The API RequestFailed'"
-         }
-    return Response(response, 201)
-
-
-@api_view(['GET'])
-def get_byCity(params):
-    city="Londres"
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid=5757b7e8a314027da52fac9129369161" 
-    response = generate_request(url, params)
-    if response:
-
-        coord  = response.get("coord")
-        lat= coord['lat']
-        lon= coord['lon']
-        key1= city +"Lat"
-        key2= city + "Lon"
-        redis.set(key1, lat)
-        redis.set(key2, lon)   
-        return Response(key1, status=status.HTTP_200_OK)
-
-    return Response("Error", status=500)
 
 
 
@@ -117,7 +53,7 @@ def generate_request(url, params={}):
  
     
 
-#@api_view(['GET'])
+
 def get_weather(params):
     
     cities = ['London', 'Santiago', 'Zurich', 'Auckland', 'Sydney', 'Georgia']

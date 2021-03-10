@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'api',
+    'celery'
 
     
     
@@ -78,7 +79,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'djangoWeather.wsgi.application'
-
+#ASGI_APPLICATION = 'asgi.application'
+CELERY_BROKER_URL = "redis://localhost:6379"
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -132,3 +134,13 @@ STATIC_URL = '/static/'
 #REDIS
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
