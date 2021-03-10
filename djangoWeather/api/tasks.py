@@ -5,7 +5,8 @@ import datetime
 import random
 from asgiref.sync import async_to_sync
 from django.conf import settings
-
+from channels.layers import get_channel_layer
+from asgiref.sync import AsyncToSync
 from rest_framework import status
 from rest_framework.response import Response
 from channels.layers import get_channel_layer
@@ -29,10 +30,9 @@ def get_weather():
 
         url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=c373cc5c75cb95bd584db9668289be86"
         data.append(get_dataW(url, city, params))
+    AsyncToSync(channel_layer.send)("channel_name",{"type": "celery.message","text": json.dumps(data)})
     
-    
-    async_to_sync(channel_layer.group_send)( 'data',{'type':'receive','string':data})
-    
+
 
 
 def get_dataW(url, city, args):

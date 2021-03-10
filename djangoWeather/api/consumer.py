@@ -17,7 +17,11 @@ class weatherConsumer(AsyncWebsocketConsumer):
     async def disconnect(self, close_code):
         pass
 
-    async def receive(self,event):
-        new_data= event['string']
-        await self.send(json.dumps(new_data))
-        print("Sended")
+
+    async def celery_message(self, event):
+        print("Service Received")
+        print(event)
+        await self.send({
+            "type": "websocket.send",
+            "text": event["text"],
+        })
