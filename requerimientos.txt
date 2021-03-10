@@ -4,3 +4,13 @@ djangorestframework
 django-cors-headers
 #redis
 redis
+
+enum-compat==0.0.2
+eventlet==0.21.0
+python-engineio
+python-socketio
+pytz==2018.7
+six==1.10.0
+
+channels
+schedule

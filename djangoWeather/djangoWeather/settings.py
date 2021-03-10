@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +41,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'api',
+
+    
+    
 ]
 
 MIDDLEWARE = [
@@ -53,7 +57,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
    
 ]
-
+# Channels settings
+ASGI_APPLICATION = "djangoWeather.routing.application"
 ROOT_URLCONF = 'djangoWeather.urls'
 
 TEMPLATES = [

@@ -117,19 +117,22 @@ def generate_request(url, params={}):
  
     
 
-@api_view(['GET'])
-def get_weather(request, *args, **kwargs):
+#@api_view(['GET'])
+def get_weather(params):
     
-    if kwargs['key']:
+    cities = ['London', 'Santiago', 'Zurich', 'Auckland', 'Sydney', 'Georgia']
+    data=[]
+    
+    for city in cities: 
 
-        lat = json.loads(redis.get(kwargs['key'] + 'Lat'))
+        lat = json.loads(redis.get(city + 'Lat'))
         
-        lon = json.loads(redis.get(kwargs['key'] + 'Lon'))
+        lon = json.loads(redis.get(city + 'Lon'))
         
         url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=c373cc5c75cb95bd584db9668289be86"
-       
+        data.append(get_dataW(url, city, params))
         
-        return Response(get_dataW(url, kwargs['key'], args), status=status.HTTP_200_OK)
+    return data
 
 
 def get_dataW(url, city, args):
