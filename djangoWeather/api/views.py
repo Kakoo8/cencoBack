@@ -1,3 +1,4 @@
+
 import time
 import schedule
 import json
@@ -7,6 +8,7 @@ from django.conf import settings
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
+from asgiref.sync import async_to_sync
 from time import time, sleep
 import random
 import datetime
@@ -84,7 +86,7 @@ def get_dataW(url, city, args):
             
             
         else:
-            redis.set(time.timestamp(), "error Consulting "+city)
+            
             response = generate_request(url, args)
             if response:
                 return response
@@ -95,6 +97,8 @@ def get_dataW(url, city, args):
 if(loaded==False):
     get_allCities("")
     loaded=True
+
+
 
       
         

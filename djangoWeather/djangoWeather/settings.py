@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'channels',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'api',
-    'celery'
+    
 
     
     
@@ -59,7 +60,7 @@ MIDDLEWARE = [
    
 ]
 # Channels settings
-ASGI_APPLICATION = "djangoWeather.routing.application"
+#ASGI_APPLICATION = "djangoWeather.routing.application"
 ROOT_URLCONF = 'djangoWeather.urls'
 
 TEMPLATES = [
@@ -79,7 +80,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'djangoWeather.wsgi.application'
-#ASGI_APPLICATION = 'asgi.application'
+ASGI_APPLICATION = 'djangoWeather.asgi.application'
 CELERY_BROKER_URL = "redis://localhost:6379"
 
 # Database
@@ -137,10 +138,10 @@ REDIS_PORT = 6379
 
 
 CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379)],
         },
     },
 }

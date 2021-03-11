@@ -14,4 +14,4 @@ six==1.10.0
 
 channels
 schedule
-celery[redis]
+django-crontab
