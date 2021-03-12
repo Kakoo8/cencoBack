@@ -14,17 +14,12 @@ volvemos a la carpeta raiz del proyecto
 Instalar Dependencias:
 
 ```
-(env)$ pip install -r requerimientos.txt
+(env)$ pip install -r requirements.txt
 ```
 
 
 Desplegamos la aplicacion
 ```
-(env)$ python manage.py makemigrations
-(env)$ python manage.py migrate
+
 (env)$ python manage.py runserver
-```
-En otro entorno virual nos dirigimos a la carpeta djangoWeather y activamos Celery
-```
-celery -A djangoWeather beat -l INFO
 ```
